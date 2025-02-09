@@ -1,0 +1,341 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+/* font-family: "Roboto", serif; */
+/* font-family: "Poppins", serif; */
+/* font-family: "Montserrat", serif; */
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root{
+    --poppins: "Poppins", serif;
+    --roboto: "Roboto", serif;
+    --lenoir: rgba(0, 0, 0, 0.85);
+    --levert: rgb(144, 251, 208);
+    --leblanc: white;
+    --lebackgradient: linear-gradient(to right ,rgb(230, 230, 230),rgb(255, 255, 255));
+    --noirlowopacity: rgb(50, 50, 50, 0.3);
+    --Colorintermediaire: rgb(204, 111, 45);
+}
+
+body{
+    background: var(--lebackgradient);
+    min-height: 100vh;
+    padding-top: 10vh;
+}
+
+.navbar{
+    background-color: var(--lenoir);
+}
+
+.navbar-brand{
+    font-family: var(--roboto);
+    font-weight: 400;
+    color: var(--levert);
+    font-size: 1.5rem;
+}
+
+.navbar-brand:hover{
+    color: var(--leblanc);
+}
+
+/* .collapse input{
+    max-width: 300px;
+} */
+
+.searcBar{
+    width: 100%;
+    max-width: 300px;
+    border-radius: 25px;
+    background-color: var(--leblanc);
+    padding: 2px 10px;
+    position: relative;
+}
+
+.searcBar i{
+    position: relative;
+    z-index: 1;
+}
+
+.searcBar input{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    border: none;
+    outline: none;
+    font-size: 15px;
+    color: var(--lenoir);
+    padding-left: 35px;
+    border-radius: 25px;
+    z-index: 0;
+}
+
+
+.connect_panier .panier{
+    /* position: relative; */
+    color: var(--leblanc);
+    width: 40px;
+    height: 40px;
+    border-radius: 50px;
+    border: 1px solid var(--leblanc);
+    cursor: pointer;
+    /* background-color: brown; */
+}
+
+.panier a{
+    color: var(--leblanc);
+}
+
+.connect_panier .panier i{
+    font-size: 1.2rem;
+}
+
+.connect_panier .panier span{
+    /* padding: 1px; */
+    color: var(--lenoir);
+    /* display: block; */
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    /* display: flex; */
+    /* align-items: center; */
+    /* justify-content: center; */
+    background-color: var(--levert);
+    /* position: absolute; */
+    bottom: -5px;
+    border: 1px solid var(--lenoir);
+    left: 0;
+    cursor: pointer;
+}
+
+.connecter{
+    padding: 5px 10px;
+    background-color: var(--levert);
+    border-radius: 20px;
+    border: 2px solid var(--lenoir);
+}
+
+/* .connect_afficher{ */
+    /* display: flex; */
+    /* color: whitesmoke; */
+    /* align-items: center; */
+    /* gap: 10px; */
+    /* justify-content: center; */
+/* } */
+
+.connect_afficher a{
+    /* padding: 5px 10px; */
+    /* background-color: whitesmoke; */
+    font-size: 15px;
+    color: var(--lenoir);
+    text-decoration: none;
+    /* color: whitesmoke; */
+}
+
+main{
+    position: relative;
+    width: 100%;
+    padding: 10px;
+}
+
+.sidebar{
+    width: 200px;
+    min-height: 87vh;
+    position: fixed;
+    z-index: 10;
+    left: 10px;
+    background-color: var(--levert);
+    padding: 10px 20px;
+    box-shadow: 0 2px 10px var(--noirlowopacity);
+    transition: all .3s ease-in-out;
+}
+
+
+
+.sidebar .lafleche{
+    position: absolute;
+    right: -10px;
+    top: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: var(--lenoir);
+    color: var(--levert);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    cursor: pointer;
+    transition: all .3s ease-in-out;
+}
+
+.sidebar h4{
+    position: relative;
+}
+
+.sidebar h4::before{
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 2px;
+    background-color: var(--lenoir);
+    bottom: -10px;
+}
+
+.sidebar ul{
+    margin-top: 20px;
+    width: 100%;
+    list-style: none;
+    height: 100%;
+    /* background-color: blueviolet; */
+}
+
+.sidebar ul li{
+    border-radius: 5px;
+    line-height: 40px;
+    font-weight: 600;
+    padding: 2px 5px;
+    margin-top: 5px;
+    border-bottom: 1px solid var(--lenoir);
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 0 5px var(--noirlowopacity);
+}
+
+.sidebar ul li:hover{
+    background-color: var(--lenoir);
+    color: var(--levert);
+}
+
+.sidebar ul li a{
+    color: var(--Colorintermediaire);
+}
+
+.contenus{
+    padding: 15px 0;
+    /* background-color: red; */
+    position: relative;
+    width: calc(100% - 200px);
+    left: 200px;
+    min-height: 100vh;
+    padding-bottom: 15vh;
+}
+
+.contenus .lespanier{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.lespanier .panier{
+    width: 100%;
+    max-width: 200px;
+    padding: 10px;
+    box-shadow: 0 0 5px var(--noirlowopacity);
+}
+
+.panier .image{
+    position: relative;
+    width: 100%;
+    height: 26vh;
+}
+
+.image img{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.panier .info-panier{
+    margin-top: 10px;
+}
+
+.info-panier .category{
+    font-size: 12px;
+}
+
+.info-panier .nomProduit{
+    font-size: 14px;
+}
+
+.info-panier h5{
+    margin-top: 5px;
+    font-size: 13px;
+}
+
+.info-panier .prix{
+    font-weight: 600;
+}
+
+.info-panier .btn{
+    width: 100%;
+    background-color: var(--lenoir);
+    color: var(--levert);
+    border-radius: 25px;
+}
+
+.info-panier .btn:active{
+    background-color: var(--levert);
+    color: var(--lenoir);
+}
+
+.footer{
+    position: absolute;
+    width: calc(100% - 20px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 5vh;
+    bottom: 0;
+    background-color: var(--lenoir);
+    color: var(--levert);
+}
+
+@media (max-width: 500px){
+    .sidebar{
+        left: -45%;
+    }
+
+    .contenus{
+        width: calc(100% - 20px);
+        left: 20px;
+    }
+
+    .sidebar .lafleche{
+        display: flex;
+    }
+
+    .sidebar.active{
+        left: 5px;
+    }
+
+    .lespanier .panier{
+        max-width: 150px;
+    }
+
+    .panier .image{
+        height: 20vh;
+    }
+
+    .info-panier .category{
+        font-size: 10px;
+    }
+    
+    .info-panier .nomProduit{
+        font-size: 12px;
+    }
+    
+    .info-panier h5{
+        font-size: 11px;
+    }
+}
