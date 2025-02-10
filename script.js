@@ -63,21 +63,25 @@ async function afficherProduits() {
       `;
       panierContainer.appendChild(produitDiv);
 
-//--------------------bouton ajouter dans le panier
+      let panier = [];
+      console.log(panier);
+//bouton ajouter dans le panier
    const boutonAjouter = produitDiv.querySelector('.btn');  
    boutonAjouter.addEventListener('click', () => {
     const produitId = doc.id;
-    let panier = JSON.parse(localStorage.getItem('panier')) || [];
+   
+    
     const produitExiste = panier.find(item => item.id === produitId);
 
     if (!produitExiste) {
         panier.push({ id: produitId, quantite: 1 });
+        console.log(panier);
+        
     } else {
         produitExiste.quantite++;
     }
 
     function mettreAJourAffichagePanier() {
-      let panier = JSON.parse(localStorage.getItem('panier')) || [];
       const spanPanier = document.querySelector('.connect_panier .panier span');
   
       let totalQuantite = 0;
@@ -88,7 +92,7 @@ async function afficherProduits() {
       spanPanier.textContent = totalQuantite;
   }
 
-    localStorage.setItem('panier', JSON.stringify(panier));
+    // localStorage.setItem('panier', JSON.stringify(panier));
     mettreAJourAffichagePanier();
 });
 
@@ -99,11 +103,11 @@ async function afficherProduits() {
   }
 }
 
-// Afficher les produits au chargement de la page
+
 window.addEventListener("load", afficherProduits);
 
 
-//----------------Afficher un message invitant l'utilisateur à créer un compte lorsqu'il clique sur le panier
+//Afficher un message invitant l'utilisateur à créer un compte lorsqu'il clique sur le panier
 document.addEventListener('DOMContentLoaded', () => {
   const panier = document.querySelector('.connect_panier .panier');
   panier.addEventListener('click', () => { 
