@@ -71,6 +71,8 @@ const handleLogin = async (event) => {
     // Connexion réussie
     console.log("Utilisateur connecté :", user);
     alert("Connexion réussie !");
+
+    localStorage.setItem('Idutilisateur', user.email)
     
     // Redirection vers la page d'accueil ou une autre page après la connexion
     window.location.href = "../compte client/compte.html";  // Remplacez par la page que vous souhaitez
