@@ -63,30 +63,27 @@ Users.addEventListener('click', () => {
 
 
 // Firebase SDKs
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
+import { appProduit } from './firebase.js';
 import { getFirestore, collection, addDoc, getDocs, updateDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
-import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-storage.js";
+import { getStorage } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-storage.js";
 
-// Configuration Firebase
-const firebaseConfig = {
-  apiKey: "AIzaSyDUIqQOW9Oy66YaJVDvxocoVxiGAlirvMQ",
-  authDomain: "ajout-de-produit.firebaseapp.com",
-  projectId: "ajout-de-produit",
-  storageBucket: "ajout-de-produit.firebasestorage.app",
-  messagingSenderId: "481573722872",
-  appId: "1:481573722872:web:c15506732fc6d9516f390d"
-};
+// Initialisation Firestore et Storage pour l'app Produit
+const dbProduit = getFirestore(appProduit);
+const storageProduit = getStorage(appProduit);
+
+// Code pour gérer les produits ici...
+
 
 // Initialisation de Firebase
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const storage = getStorage(app);
+// const app = initializeApp(firebaseConfig);
+// const db = getFirestore(app);
+// const storage = getStorage(app);
 
 // Fonction pour ajouter un produit
 async function ajouterProduit(nom, prix, categorie, imageFile) { 
   try {
     // Ajouter le produit à Firestore
-    const docRef = await addDoc(collection(db, "produits"), {
+    const docRef = await addDoc(collection(dbProduit, "produits"), {
       nomProduit: nom,
       prixProduit: prix,
       categorie: categorie,
@@ -97,7 +94,7 @@ async function ajouterProduit(nom, prix, categorie, imageFile) {
 
     // Si une image est sélectionnée
     if (imageFile) {
-      const storageRef = ref(storage, 'produits/' + imageFile.name);
+      const storageRef = ref(storageProduit, 'produits/' + imageFile.name);
       console.log('Début du téléchargement de l\'image :', imageFile.name);
 
       // Télécharger l'image sur Firebase Storage
@@ -125,7 +122,7 @@ async function ajouterProduit(nom, prix, categorie, imageFile) {
 async function afficherProduits() {
   try {
     // Récupérer les produits depuis Firestore
-    const produitsRef = collection(db, "produits");
+    const produitsRef = collection(dbProduit, "produits");
     const produitsSnapshot = await getDocs(produitsRef);
     const produitsList = produitsSnapshot.docs;
 
