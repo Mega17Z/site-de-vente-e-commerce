@@ -62,6 +62,37 @@ async function afficherProduits() {
         </div>
       `;
       panierContainer.appendChild(produitDiv);
+
+
+const boutonAjouter = produitDiv.querySelector('.btn');  
+boutonAjouter.addEventListener('click', () => {
+    const produitId = doc.id;
+    let panier = JSON.parse(localStorage.getItem('panier')) || [];
+    const produitExiste = panier.find(item => item.id === produitId);
+
+    if (!produitExiste) {
+        panier.push({ id: produitId, quantite: 1 });
+    } else {
+        produitExiste.quantite++;
+    }
+
+    function mettreAJourAffichagePanier() {
+      let panier = JSON.parse(localStorage.getItem('panier')) || [];
+      const spanPanier = document.querySelector('.connect_panier .panier span');
+  
+      let totalQuantite = 0;
+      panier.forEach(produit => {
+          totalQuantite += produit.quantite;
+      });
+  
+      spanPanier.textContent = totalQuantite;
+  }
+
+    localStorage.setItem('panier', JSON.stringify(panier));
+    mettreAJourAffichagePanier();
+});
+
+
     });
   } catch (error) {
     console.error("Erreur lors de la récupération des produits : ", error);
