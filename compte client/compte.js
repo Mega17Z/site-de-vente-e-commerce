@@ -91,7 +91,7 @@ function afficherPanier() {
             <p class="m-0" id="quantite-${index}">${el.quantite || 0}</p>
             <i class="fa-solid fa-plus"></i>
           </div>
-          <h6>Total : <span id="total-${index}">${(el.prixProduit * (el.quantite || 0)).toFixed(2)}fr</span></h6>
+          <h6>Total : <span id="total-${index}">${(el.prixProduit * (el.quantite || 0)).toFixed(2)}</span></h6>
         </div>
       </div>
     `;
@@ -108,11 +108,11 @@ function afficherPanier() {
       if (el.quantite > 0) {
         el.quantite--; // Décrémenter la quantité
         quantityDisplay.textContent = el.quantite; // Mettre à jour l'affichage de la quantité
-        totalDisplay.textContent = `${(el.prixProduit * el.quantite).toFixed(2)}fr`; // Mettre à jour le total du produit
+        totalDisplay.textContent = `${(el.prixProduit * el.quantite).toFixed(2)}`; // Mettre à jour le total du produit
 
         // Recalculer le total global
         total = panier.reduce((acc, item) => acc + (item.prixProduit * item.quantite), 0);
-        document.querySelector('.totalProduits').textContent = `${total.toFixed(2)}fr`; // Afficher le total global
+        document.querySelector('.totalProduits').textContent = `${total.toFixed(2)}`; // Afficher le total global
       }
     });
 
@@ -120,11 +120,11 @@ function afficherPanier() {
     plusButton.addEventListener('click', () => {
       el.quantite++; // Incrémenter la quantité
       quantityDisplay.textContent = el.quantite; // Mettre à jour l'affichage de la quantité
-      totalDisplay.textContent = `${(el.prixProduit * el.quantite).toFixed(2)}fr`; // Mettre à jour le total du produit
+      totalDisplay.textContent = `${(el.prixProduit * el.quantite).toFixed(2)}`; // Mettre à jour le total du produit
 
       // Recalculer le total global
       total = panier.reduce((acc, item) => acc + (item.prixProduit * item.quantite), 0);
-      document.querySelector('.totalProduits').textContent = `${total.toFixed(2)}fr`; // Afficher le total global
+      document.querySelector('.totalProduits').textContent = `${total.toFixed(2)}`; // Afficher le total global
     });
 
     // Ajouter le total du produit au total global
@@ -207,3 +207,15 @@ window.addEventListener("load", afficherProduits);
 // console.log(lenom)
 // console.log(recupernom)
 // lenom.textContent = recupernom
+
+const valider = document.querySelector('.validation')
+const lavalidation = document.querySelector('.lavalidition')
+const fermer = document.querySelector('.fermer')
+valider.addEventListener('click', (e)=>{
+  e.preventDefault()
+  lavalidation.classList.add('active')
+})
+
+fermer.addEventListener('click', ()=>{
+  lavalidation.classList.remove('active')
+})
