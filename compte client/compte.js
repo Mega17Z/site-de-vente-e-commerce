@@ -218,4 +218,5 @@ valider.addEventListener('click', (e)=>{
 
 fermer.addEventListener('click', ()=>{
   lavalidation.classList.remove('active')
+  location.reload()
 })
