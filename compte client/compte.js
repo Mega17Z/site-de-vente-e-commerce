@@ -67,15 +67,20 @@ const storageProduit = getStorage(appProduit);
 
 // Fonction pour afficher les produits
 let panier = [];
-let total = 0;  // Déclarez le total global
+let total = 0;
 
 const compte = document.getElementById('nombre');
-const partieMonPanier = document.querySelector('.Sectpaniers');
+const partieMonPanier = document.querySelector('.SectionPaniers');
 
 // Fonction pour afficher le panier et le total
 function afficherPanier() {
-//   partieMonPanier.innerHTML = ''; // Vider le conteneur du panier avant de le remplir à nouveau
+  partieMonPanier.innerHTML = ''; // Vider le conteneur du panier avant de le remplir à nouveau
   total = 0; // Réinitialiser le total à chaque affichage du panier
+  console.log(panier)
+  panier.forEach((el) => {
+    total += el.prixProduit * (el.quantite || 0);
+    document.querySelector('.totalProduits').textContent = `${total.toFixed(2)}`;
+  })
 
   panier.forEach((el, index) => {
     const div = document.createElement('div');

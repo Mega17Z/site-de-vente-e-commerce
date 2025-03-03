@@ -527,7 +527,7 @@ form .importImage{
     /* flex-wrap: wrap; */
     /* padding-top: 50px; */
     flex-direction: column;
-    justify-content: center;
+    /* justify-content: center; */
     /* flex-direction: column; */
     gap: 10px;
 }

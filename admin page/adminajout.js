@@ -80,7 +80,6 @@ try {
       <div class="lesinfos">
         <h5 class="m-0">${user.prenom} ${user.nom}</h5>
         <h6 class="">${user.email}</h6>
-        <h6><u class="me-2">Mot de passe:</u> <span class="mdp">********</span></h6>
       </div>
       <i class="fa-solid fa-trash" onclick="deleteUser('${user.email}')"></i>  <!-- On ajoute un bouton de suppression -->
     `;
