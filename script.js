@@ -1,13 +1,5 @@
-const sidebarActif = document.querySelector('.sidebar')
-const flecheActivation = document.querySelector('.lafleche')
-
-flecheActivation.addEventListener('click', ()=>{
-    sidebarActif.classList.toggle('active')
-})
-
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+import { getFirestore, collection, getDocs, query, where } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
 import { getStorage, ref, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-storage.js";
 
 // Configuration Firebase
@@ -26,11 +18,23 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 // Fonction pour afficher les produits
-async function afficherProduits() {
+async function afficherProduits(categorie = null, searchQuery = '') {
   try {
-    // Récupérer les produits depuis Firestore
     const produitsRef = collection(db, "produits");
-    const produitsSnapshot = await getDocs(produitsRef);
+    let produitsSnapshot;
+
+    // Si une catégorie est spécifiée, filtrer par catégorie
+    if (categorie) {
+      const produitsQuery = query(produitsRef, where("categorie", "==", categorie));
+      produitsSnapshot = await getDocs(produitsQuery);
+    } else if (searchQuery) {
+      // Si une recherche est effectuée, filtrer par nom de produit
+      const produitsQuery = query(produitsRef, where("nomProduit", ">=", searchQuery), where("nomProduit", "<=", searchQuery + '\uf8ff'));
+      produitsSnapshot = await getDocs(produitsQuery);
+    } else {
+      produitsSnapshot = await getDocs(produitsRef);  // Récupérer tous les produits si aucun filtre n'est spécifié
+    }
+
     const produitsList = produitsSnapshot.docs;
 
     const panierContainer = document.querySelector('.lespanier');
@@ -63,51 +67,73 @@ async function afficherProduits() {
       `;
       panierContainer.appendChild(produitDiv);
 
-      let panier = [];
-      console.log(panier);
-//bouton ajouter dans le panier
-   const boutonAjouter = produitDiv.querySelector('.btn');  
-   boutonAjouter.addEventListener('click', () => {
-    const produitId = doc.id;
-   
-    
-    const produitExiste = panier.find(item => item.id === produitId);
+      // Bouton ajouter dans le panier
+      const boutonAjouter = produitDiv.querySelector('.btn');  
+      boutonAjouter.addEventListener('click', () => {
+        const produitId = doc.id;
+        let panier = JSON.parse(localStorage.getItem('panier')) || [];
+        const produitExiste = panier.find(item => item.id === produitId);
 
-    if (!produitExiste) {
-        panier.push({ id: produitId, quantite: 1 });
-        console.log(panier);
-        
-    } else {
-        produitExiste.quantite++;
-    }
+        if (!produitExiste) {
+          panier.push({ id: produitId, quantite: 1 });
+        } else {
+          produitExiste.quantite++;
+        }
 
-    function mettreAJourAffichagePanier() {
-      const spanPanier = document.querySelector('.connect_panier .panier span');
+        function mettreAJourAffichagePanier() {
+          let panier = JSON.parse(localStorage.getItem('panier')) || [];
+          const spanPanier = document.querySelector('.connect_panier .panier span');
   
-      let totalQuantite = 0;
-      panier.forEach(produit => {
-          totalQuantite += produit.quantite;
+          let totalQuantite = 0;
+          panier.forEach(produit => {
+              totalQuantite += produit.quantite;
+          });
+  
+          spanPanier.textContent = totalQuantite;
+      }
+
+        localStorage.setItem('panier', JSON.stringify(panier));
+        mettreAJourAffichagePanier();
       });
-  
-      spanPanier.textContent = totalQuantite;
-  }
-
-    // localStorage.setItem('panier', JSON.stringify(panier));
-    mettreAJourAffichagePanier();
-});
-
-
     });
   } catch (error) {
     console.error("Erreur lors de la récupération des produits : ", error);
   }
 }
 
+// Afficher les produits au chargement de la page
+window.addEventListener("load", () => {
+  afficherProduits(); // Afficher tous les produits au départ
+});
 
-window.addEventListener("load", afficherProduits);
+// Gestionnaires d'événements pour le filtrage des catégories
+document.addEventListener('DOMContentLoaded', () => {
+  const categorieElements = document.querySelectorAll('.sidebar ul li'); // Sélectionner tous les éléments de catégorie
+
+  categorieElements.forEach((categorieElement) => {
+    categorieElement.addEventListener('click', () => {
+      const categorie = categorieElement.textContent.trim().toLocaleLowerCase(); // Récupérer le texte de la catégorie (ex: "Ordinateur")
+      afficherProduits(categorie); // Afficher les produits filtrés par catégorie
+    });
+  });
+
+  // Gestion de la flèche pour afficher/masquer la sidebar
+  const sidebarActif = document.querySelector('.sidebar');
+  const flecheActivation = document.querySelector('.lafleche');
+
+  flecheActivation.addEventListener('click', () => {
+    sidebarActif.classList.toggle('active');
+  });
+
+  const searchInput = document.querySelector('.searcBar input'); 
+  searchInput.addEventListener('input', () => {
+    const searchQuery = searchInput.value.trim().toLowerCase();
+    afficherProduits(searchQuery); 
+  });
+});
 
 
-//Afficher un message invitant l'utilisateur à créer un compte lorsqu'il clique sur le panier
+
 document.addEventListener('DOMContentLoaded', () => {
   const panier = document.querySelector('.connect_panier .panier');
   panier.addEventListener('click', () => { 
@@ -125,7 +151,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
 function verifierSiUtilisateurEstConnecte() {
-  
   return false; 
 }
 
